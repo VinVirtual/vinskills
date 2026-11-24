@@ -45,7 +45,8 @@ jobs:
       # skill-ci on its SKILL.md). The config lives outside the checkout, so it stays trusted
       # while lock-config ignores anything a pull request could add to hide findings.
       - name: skill-ci config (marketplace, no SKILL.md here)
-        run: printf 'disable: [skill-md]\n' > "$RUNNER_TEMP/skill-ci.yml"
+        run: |
+          printf 'disable: [skill-md]\n' > "$RUNNER_TEMP/skill-ci.yml"
       - uses: VinVirtual/skill-ci@ba5b72f63c1b0a6061b7d088c784d2e409fd89c8 # v1.0.0
         with:
           path: .
