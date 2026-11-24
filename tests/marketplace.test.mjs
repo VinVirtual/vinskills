@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import path from 'node:path'
 import { spawnSync } from 'node:child_process'
-import { ROOT, has } from './helpers.mjs'
+import { ROOT, has, tmpdir } from './helpers.mjs'
 import { loadCatalog, validateCatalog, buildMarketplace, buildThemeManifest, outputs, spliceReadme } from '../scripts/build-marketplace.mjs'
 import { lintAll, lintSkill, parseFrontmatter, lintMarketplace } from '../scripts/validate.mjs'
 
@@ -60,7 +60,7 @@ test('every skill belongs to exactly one bundle and every bundle dependency exis
 })
 
 test('lintMarketplace catches escaping and missing relative sources', () => {
-  const d = fs.mkdtempSync(path.join(ROOT, '.scratch', 'lint-'))
+  const d = tmpdir()
   try {
     fs.mkdirSync(path.join(d, '.claude-plugin'))
     fs.writeFileSync(path.join(d, '.claude-plugin/marketplace.json'), JSON.stringify({ name: 'm', owner: { name: 'o' }, plugins: [{ name: 'a', source: './../x' }, { name: 'b', source: './missing' }, { name: 'c', source: { source: 'github', repo: 'o/r' } }] }))
@@ -70,7 +70,7 @@ test('lintMarketplace catches escaping and missing relative sources', () => {
 })
 
 test('lintSkill catches a bad SKILL.md', () => {
-  const d = fs.mkdtempSync(path.join(ROOT, '.scratch', 'skill-'))
+  const d = tmpdir()
   const dir = path.join(d, 'my-skill')
   fs.mkdirSync(dir)
   try {
