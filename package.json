@@ -1,8 +1,8 @@
 {
   "name": "vinskills",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "VinSkills: a Claude Code plugin marketplace of Lashvin Manimaran's skills, plus the vin-core plugin.",
+  "description": "VinSkills: a Claude Code plugin marketplace that lists Lashvin Manimaran's skills, one public repository each.",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -10,8 +10,7 @@
     "test:online": "VINSKILLS_ONLINE=1 node --test tests/sources.test.mjs",
     "validate": "node scripts/validate.mjs"
   },
-  "devDependencies": {
-    "playwright-core": "1.65.1"
-  },
-  "engines": { "node": ">=22" }
+  "engines": {
+    "node": ">=22"
+  }
 }

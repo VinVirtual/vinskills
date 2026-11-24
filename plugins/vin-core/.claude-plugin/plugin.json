@@ -1,8 +1,8 @@
 {
   "name": "vin-core",
   "displayName": "Vin Core",
-  "version": "0.1.0",
-  "description": "House workflow and context tools: ship with agents, web QA, token and cost lens, symbol navigation, documents to Markdown, output squeezing and scripts over big JSON.",
+  "version": "2.0.0",
+  "description": "House workflow and context tools: ship with agents, web QA, a token and cost meter, symbol navigation, documents to Markdown, output squeezing and scripts over big JSON. This bundle has no skills of its own: installing it installs its member plugins.",
   "author": {
     "name": "Lashvin Manimaran",
     "url": "https://github.com/VinVirtual"
@@ -10,5 +10,18 @@
   "homepage": "https://github.com/VinVirtual/vinskills",
   "repository": "https://github.com/VinVirtual/vinskills",
   "license": "MIT",
-  "keywords": ["workflow", "agents", "qa", "context", "cost", "markdown", "navigation"]
+  "keywords": [
+    "bundle",
+    "core"
+  ],
+  "dependencies": [
+    "vin-house-build",
+    "vin-agent-orchestration",
+    "vin-site-qa",
+    "vin-meter",
+    "vin-navigator",
+    "vin-docs",
+    "vin-squeeze",
+    "vin-scriptlens"
+  ]
 }

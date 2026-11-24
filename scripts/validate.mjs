@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-// Lint the marketplace, plugin manifests and every SKILL.md in this repository.
+// Lint the marketplace, the catalog and the bundle manifests in this repository. The skills
+// themselves live in their own repositories, which lint their SKILL.md in their own CI;
+// tests/sources.test.mjs checks each pinned SKILL.md online.
 // No dependencies; `claude plugin validate .` is the authoritative check when the CLI is installed.
 import fs from 'node:fs'
 import path from 'node:path'
@@ -21,39 +23,6 @@ export function parseFrontmatter (text) {
     data[kv[1]] = v
   }
   return { data, body: m[2] }
-}
-
-/** Problems with one SKILL.md. `dir` is the skill folder. */
-export function lintSkill (dir) {
-  const problems = []
-  const file = path.join(dir, 'SKILL.md')
-  if (!fs.existsSync(file)) return [`${dir}: no SKILL.md`]
-  const text = fs.readFileSync(file, 'utf8')
-  const fm = parseFrontmatter(text)
-  const rel = path.relative(ROOT, file)
-  if (!fm) return [`${rel}: no frontmatter`]
-  const { name, description } = fm.data
-  if (!name) problems.push(`${rel}: name missing`)
-  else {
-    if (!NAME_RE.test(name) || name.length > 64) problems.push(`${rel}: name "${name}" must be kebab-case, at most 64 characters`)
-    if (name !== path.basename(dir)) problems.push(`${rel}: name "${name}" does not match folder "${path.basename(dir)}"`)
-    if (RESERVED.test(name)) problems.push(`${rel}: name uses a reserved word`)
-  }
-  if (!description) problems.push(`${rel}: description missing`)
-  else {
-    if (description.length > 1024) problems.push(`${rel}: description is ${description.length} characters (max 1024)`)
-    if (/[<>]/.test(description)) problems.push(`${rel}: description contains < or > (XML-like tags are not allowed)`)
-    if (!/\buse (when|for|before|after)\b/i.test(description)) problems.push(`${rel}: description never says when to use the skill`)
-  }
-  const lines = fm.body.split('\n').length
-  if (lines > 500) problems.push(`${rel}: body is ${lines} lines (keep under 500, move detail to references/)`)
-  // Every relative file mentioned in backticks or links must exist.
-  const refs = new Set()
-  for (const m of fm.body.matchAll(/`((?:references|scripts)\/[A-Za-z0-9_./-]+)`/g)) refs.add(m[1])
-  for (const m of fm.body.matchAll(/\]\(((?:references|scripts)\/[^)\s]+)\)/g)) refs.add(m[1])
-  for (const r of refs) if (!fs.existsSync(path.join(dir, r))) problems.push(`${rel}: mentions ${r}, which does not exist`)
-  if (/\/home\/[a-z]|\/Users\/[a-z]/.test(text)) problems.push(`${rel}: contains an absolute home path`)
-  return problems
 }
 
 export function lintManifest (file) {
@@ -103,8 +72,7 @@ export function lintAll (root = ROOT) {
   for (const p of fs.readdirSync(pluginsDir)) {
     const mf = path.join(pluginsDir, p, '.claude-plugin/plugin.json')
     problems.push(...lintManifest(mf))
-    const skillsDir = path.join(pluginsDir, p, 'skills')
-    if (fs.existsSync(skillsDir)) for (const s of fs.readdirSync(skillsDir)) problems.push(...lintSkill(path.join(skillsDir, s)))
+    if (fs.existsSync(path.join(pluginsDir, p, 'skills'))) problems.push(`plugins/${p}: bundles hold no skills; skills live in their own repositories`)
   }
   return problems
 }
@@ -112,6 +80,6 @@ export function lintAll (root = ROOT) {
 if (process.argv[1] && process.argv[1].endsWith('validate.mjs')) {
   const problems = lintAll()
   for (const p of problems) console.error('✗ ' + p)
-  console.log(problems.length ? `${problems.length} problem(s)` : '✔ marketplace, manifests and skills look right')
+  console.log(problems.length ? `${problems.length} problem(s)` : '✔ marketplace, catalog and bundle manifests look right')
   process.exitCode = problems.length ? 1 : 0
 }

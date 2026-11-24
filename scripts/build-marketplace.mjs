@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-// Generate .claude-plugin/marketplace.json, the theme plugin manifests and the README skill
-// table from catalog.json. Run after editing catalog.json.
+// Generate .claude-plugin/marketplace.json, the bundle plugin manifests and the README skill
+// table from catalog.json. Run after editing catalog.json. Every skill lives in its own public
+// repository; this repository only lists them, pinned to a commit, and groups them in bundles.
 //   node scripts/build-marketplace.mjs           write files
 //   node scripts/build-marketplace.mjs --check   exit 1 if any generated file is out of date
 //   node scripts/build-marketplace.mjs --pin     move every sha to the repo's current main (needs gh)
@@ -12,7 +13,7 @@ import { fileURLToPath } from 'node:url'
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 export const MARKETPLACE_NAME = 'vinskills'
 const AUTHOR = { name: 'Lashvin Manimaran', url: 'https://github.com/VinVirtual' }
-const VERSION = '0.1.0'
+const VERSION = '2.0.0'
 
 export function loadCatalog (root = ROOT) {
   return JSON.parse(fs.readFileSync(path.join(root, 'catalog.json'), 'utf8'))
@@ -31,18 +32,12 @@ export function validateCatalog (cat) {
     if (!s.description || s.description.length > 300) errors.push(`${s.name}: description missing or too long`)
   }
   for (const t of Object.keys(cat.themes)) if (names.has(t)) errors.push(`theme ${t} clashes with a skill name`)
-  if (names.has('vin-core')) errors.push('vin-core is reserved for the plugin built here')
+  for (const t of Object.keys(cat.themes)) if (!(cat.skills || []).some(s => s.theme === t)) errors.push(`theme ${t} has no skills`)
   return errors
 }
 
 export function buildMarketplace (cat) {
-  const plugins = [{
-    name: 'vin-core',
-    source: './plugins/vin-core',
-    description: 'House workflow and context tools: build and ship with agents, web QA, token and cost lens, symbol navigation, documents to Markdown, output squeezing, scripts over big JSON.',
-    category: 'workflow',
-    tags: ['workflow', 'agents', 'qa', 'context', 'cost']
-  }]
+  const plugins = []
   for (const [theme, t] of Object.entries(cat.themes)) {
     plugins.push({
       name: theme,
@@ -66,7 +61,7 @@ export function buildMarketplace (cat) {
   return {
     $schema: 'https://anthropic.com/claude-code/marketplace.schema.json',
     name: MARKETPLACE_NAME,
-    description: "Lashvin Manimaran's Claude Code skills: media, robotics and AI evaluation, plus the vin-core workflow plugin.",
+    description: "Lashvin Manimaran's Claude Code skills, one public repository each: workflow and context tools (vin-core), media, robotics and AI evaluation.",
     owner: AUTHOR,
     metadata: { version: VERSION },
     plugins
@@ -89,20 +84,8 @@ export function buildThemeManifest (cat, theme) {
   }
 }
 
-const VIN_CORE_SKILLS = [
-  ['vin-house-build', 'The house flow from brief to release with agents, the agent rules, a privacy scan and a fresh-clone test.'],
-  ['vin-agent-orchestration', 'Brief subagents well, run them in parallel in one repo without collisions, get comparable reports.'],
-  ['vin-site-qa', 'Ship-check a page: screenshots at 390/1024/1440 in both themes and WebKit iPhone, console, CSP, prerender/SEO, quick a11y, LCP/CLS/JS.'],
-  ['vin-burn', 'Token and cost lens over local Claude Code transcripts, by day, project, model, tool and task category.'],
-  ['vin-navigator', 'Symbol index for JS/TS/Python/Go/Swift: find, show, refs, outline, so edits target one symbol.'],
-  ['vin-docs', 'PDF, DOCX, XLSX, PPTX and HTML to clean Markdown on this machine, with tables and page markers.'],
-  ['vin-squeeze', 'Shrink long logs, command output and JSON before they enter context, keeping every error line.'],
-  ['vin-scriptlens', 'Run a small sandboxed script over a big JSON response; only the answer enters context.']
-]
-
 export function buildReadmeTable (cat) {
-  const lines = ['| Plugin | Skill | What it does |', '| --- | --- | --- |']
-  for (const [name, what] of VIN_CORE_SKILLS) lines.push(`| vin-core | [${name}](plugins/vin-core/skills/${name}/SKILL.md) | ${what} |`)
+  const lines = ['| Bundle | Skill (repository) | What it does |', '| --- | --- | --- |']
   for (const theme of Object.keys(cat.themes)) {
     for (const s of cat.skills.filter(x => x.theme === theme)) lines.push(`| ${theme} | [${s.name}](https://github.com/${s.repo}) | ${s.description.replace(/\|/g, '\\|')} |`)
   }

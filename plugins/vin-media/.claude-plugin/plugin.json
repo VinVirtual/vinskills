@@ -1,7 +1,7 @@
 {
   "name": "vin-media",
   "displayName": "Vin Media",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "description": "Make videos, podcasts, dubs, voiced websites, talking avatars, courses, share cards and release notes on your own machine. This bundle has no skills of its own: installing it installs its member plugins.",
   "author": {
     "name": "Lashvin Manimaran",

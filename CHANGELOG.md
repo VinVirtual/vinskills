@@ -6,7 +6,36 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
-## [0.1.0] - 2026-11-24
+## [2.0.0] - 2026-11-24
+
+### Changed
+- **Split into repositories.** The eight `vin-core` skills now live in their own public
+  repositories, each with its own tests, CI, licence and v1.0.0 release:
+  [vin-house-build](https://github.com/VinVirtual/vin-house-build),
+  [vin-agent-orchestration](https://github.com/VinVirtual/vin-agent-orchestration),
+  [vin-site-qa](https://github.com/VinVirtual/vin-site-qa),
+  [vin-meter](https://github.com/VinVirtual/vin-meter),
+  [vin-navigator](https://github.com/VinVirtual/vin-navigator),
+  [vin-docs](https://github.com/VinVirtual/vin-docs),
+  [vin-squeeze](https://github.com/VinVirtual/vin-squeeze) and
+  [vin-scriptlens](https://github.com/VinVirtual/vin-scriptlens).
+- **`vin-burn` is renamed `vin-meter`**, including its CLI (`scripts/vin-meter.mjs`).
+- VinSkills is now a pure marketplace: `catalog.json` lists all 29 skill repositories, each its
+  own plugin pinned to a commit. `vin-core` is a bundle like the other three, so
+  `/plugin install vin-core@vinskills` still installs all eight core skills, and each can be
+  installed alone (for example `/plugin install vin-meter@vinskills`).
+- README: one table of every skill with its repository link; install commands for bundles and
+  single skills.
+- Tests: the skill tests moved to the skill repositories. Here they check the catalog, the
+  generated files, the bundles, that no skill code is left in this repository, banned names,
+  and (online) that every pinned repository is public and has a SKILL.md with the plugin's name
+  and a licence at the pinned commit.
+
+### Removed
+- `plugins/vin-core/skills/` and the `examples/` folder (now in vin-site-qa and vin-docs).
+- The `playwright-core` dev dependency and the poppler step in CI, no longer needed here.
+
+## [1.0.0] - 2026-11-24
 
 ### Added
 - Claude Code plugin marketplace `vinskills` (`.claude-plugin/marketplace.json`), generated from `catalog.json`.

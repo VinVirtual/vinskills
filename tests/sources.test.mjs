@@ -1,9 +1,11 @@
-// Online check: every pinned source exists, is public, and has a SKILL.md at the pinned commit.
+// Online check: every pinned source exists, is public, and has a SKILL.md whose name matches the
+// plugin name, plus a LICENSE, at the pinned commit.
 // Runs only with VINSKILLS_ONLINE=1 (npm run test:online). Uses the GitHub REST API without a
 // token, so it works in CI and on any machine; GH_TOKEN raises the rate limit if set.
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { loadCatalog } from '../scripts/build-marketplace.mjs'
+import { parseFrontmatter } from '../scripts/validate.mjs'
 
 const online = process.env.VINSKILLS_ONLINE === '1'
 const headers = { accept: 'application/vnd.github+json', 'user-agent': 'vinskills-source-check', ...(process.env.GH_TOKEN ? { authorization: `Bearer ${process.env.GH_TOKEN}` } : {}) }
@@ -15,7 +17,7 @@ const api = async (p) => {
 const cat = loadCatalog()
 
 for (const s of cat.skills) {
-  test(`${s.name}: public repo, pinned commit exists, SKILL.md at the repo root`, { skip: !online && 'set VINSKILLS_ONLINE=1', timeout: 30000 }, async () => {
+  test(`${s.name}: public repo, pinned commit exists, SKILL.md named ${s.name} and a LICENSE at the repo root`, { skip: !online && 'set VINSKILLS_ONLINE=1', timeout: 30000 }, async () => {
     const repo = await api(`repos/${s.repo}`)
     assert.equal(repo.status, 200, `${s.repo} not found`)
     assert.equal(repo.body.private, false, `${s.repo} is private`)
@@ -25,7 +27,12 @@ for (const s of cat.skills) {
     const skill = await api(`repos/${s.repo}/contents/SKILL.md?ref=${s.sha}`)
     assert.equal(skill.status, 200, `${s.repo}@${s.sha} has no root SKILL.md`)
     const text = Buffer.from(skill.body.content, 'base64').toString('utf8')
-    assert.match(text, new RegExp(`^---[\\s\\S]*?\\nname:\\s*${s.name}\\s*\\n`), 'SKILL.md name does not match the plugin name')
+    const fm = parseFrontmatter(text)
+    assert.ok(fm, 'SKILL.md has no frontmatter')
+    assert.equal(fm.data.name, s.name, 'SKILL.md name does not match the plugin name')
+    assert.ok(fm.data.description && fm.data.description.length <= 1024, 'SKILL.md description missing or over 1024 characters')
+    const licence = await api(`repos/${s.repo}/contents/LICENSE?ref=${s.sha}`)
+    assert.equal(licence.status, 200, `${s.repo}@${s.sha} has no LICENSE`)
   })
 }
 

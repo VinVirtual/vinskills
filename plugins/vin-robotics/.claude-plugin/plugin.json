@@ -1,7 +1,7 @@
 {
   "name": "vin-robotics",
   "displayName": "Vin Robotics",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "description": "Check, view, animate, simulate, replay and film robot models (URDF), make AR files and scan objects into 3D. This bundle has no skills of its own: installing it installs its member plugins.",
   "author": {
     "name": "Lashvin Manimaran",

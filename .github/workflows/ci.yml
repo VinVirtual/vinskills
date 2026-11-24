@@ -21,17 +21,13 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
-      - name: Install poppler (PDF tests)
-        run: sudo apt-get update -q && sudo apt-get install -y -q poppler-utils
-      - name: Install dependencies
-        run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Generated files are up to date
         run: node scripts/build-marketplace.mjs --check
-      - name: Lint manifests and skills
+      - name: Lint the marketplace, catalog and bundle manifests
         run: node scripts/validate.mjs
       - name: Tests (the claude CLI test is skipped on the runner)
         run: npm test
-      - name: Pinned sources exist and are public
+      - name: Every pinned skill repository is public with a matching SKILL.md
         run: npm run test:online
         env:
           GH_TOKEN: ${{ github.token }}
@@ -45,7 +41,13 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+      # This repository is a marketplace with no SKILL.md of its own (each skill repository runs
+      # skill-ci on its SKILL.md). The config lives outside the checkout, so it stays trusted
+      # while lock-config ignores anything a pull request could add to hide findings.
+      - name: skill-ci config (marketplace, no SKILL.md here)
+        run: printf 'disable: [skill-md]\n' > "$RUNNER_TEMP/skill-ci.yml"
       - uses: VinVirtual/skill-ci@ba5b72f63c1b0a6061b7d088c784d2e409fd89c8 # v1.0.0
         with:
           path: .
+          config: ${{ runner.temp }}/skill-ci.yml
           lock-config: "true"

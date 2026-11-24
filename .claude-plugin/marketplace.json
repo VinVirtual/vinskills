@@ -1,26 +1,23 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "vinskills",
-  "description": "Lashvin Manimaran's Claude Code skills: media, robotics and AI evaluation, plus the vin-core workflow plugin.",
+  "description": "Lashvin Manimaran's Claude Code skills, one public repository each: workflow and context tools (vin-core), media, robotics and AI evaluation.",
   "owner": {
     "name": "Lashvin Manimaran",
     "url": "https://github.com/VinVirtual"
   },
   "metadata": {
-    "version": "0.1.0"
+    "version": "2.0.0"
   },
   "plugins": [
     {
       "name": "vin-core",
       "source": "./plugins/vin-core",
-      "description": "House workflow and context tools: build and ship with agents, web QA, token and cost lens, symbol navigation, documents to Markdown, output squeezing, scripts over big JSON.",
-      "category": "workflow",
+      "description": "House workflow and context tools: ship with agents, web QA, a token and cost meter, symbol navigation, documents to Markdown, output squeezing and scripts over big JSON. Installs: vin-house-build, vin-agent-orchestration, vin-site-qa, vin-meter, vin-navigator, vin-docs, vin-squeeze, vin-scriptlens.",
+      "category": "bundle",
       "tags": [
-        "workflow",
-        "agents",
-        "qa",
-        "context",
-        "cost"
+        "bundle",
+        "core"
       ]
     },
     {
@@ -52,6 +49,142 @@
         "bundle",
         "ai-eval"
       ]
+    },
+    {
+      "name": "vin-house-build",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/vin-house-build",
+        "ref": "main",
+        "sha": "b59baf42c2f055c6f3f4decd2b7e13b2c45da8a2"
+      },
+      "description": "The house flow from brief to release with agents, the agent rules, a privacy scan and a fresh-clone test.",
+      "category": "core",
+      "homepage": "https://github.com/VinVirtual/vin-house-build",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "vin-agent-orchestration",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/vin-agent-orchestration",
+        "ref": "main",
+        "sha": "ecdb30cf8a87e898d29b6121d2aea874df759413"
+      },
+      "description": "Brief subagents well, run them in parallel in one repo without collisions, get comparable reports.",
+      "category": "core",
+      "homepage": "https://github.com/VinVirtual/vin-agent-orchestration",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "vin-site-qa",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/vin-site-qa",
+        "ref": "main",
+        "sha": "f7424a5b404355d511d4c33a9139d9eef1ee2d9e"
+      },
+      "description": "Ship-check a page: screenshots at 390/1024/1440 in both themes and WebKit iPhone, console, CSP, prerender/SEO, quick a11y, LCP/CLS/JS.",
+      "category": "core",
+      "homepage": "https://github.com/VinVirtual/vin-site-qa",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "vin-meter",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/vin-meter",
+        "ref": "main",
+        "sha": "2da21b0315950d4c0be9660e43d54a8c9e186f8e"
+      },
+      "description": "Token and cost meter over local Claude Code transcripts, by day, project, model, tool and task category.",
+      "category": "core",
+      "homepage": "https://github.com/VinVirtual/vin-meter",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "vin-navigator",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/vin-navigator",
+        "ref": "main",
+        "sha": "5fdae2d867c059f3a279ff27dbbfe22714e04891"
+      },
+      "description": "Symbol index for JS/TS/Python/Go/Swift: find, show, refs, outline, so edits target one symbol.",
+      "category": "core",
+      "homepage": "https://github.com/VinVirtual/vin-navigator",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "vin-docs",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/vin-docs",
+        "ref": "main",
+        "sha": "a479617106f33c47c22fc12f8586f618513e6b4d"
+      },
+      "description": "PDF, DOCX, XLSX, PPTX and HTML to clean Markdown on this machine, with tables and page markers.",
+      "category": "core",
+      "homepage": "https://github.com/VinVirtual/vin-docs",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "vin-squeeze",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/vin-squeeze",
+        "ref": "main",
+        "sha": "047eddc5490e538aadcc1757f54190221316c9ef"
+      },
+      "description": "Shrink long logs, command output and JSON before they enter context, keeping every error line.",
+      "category": "core",
+      "homepage": "https://github.com/VinVirtual/vin-squeeze",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "vin-scriptlens",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/vin-scriptlens",
+        "ref": "main",
+        "sha": "e682f430f9118895331537e24ed5cc1383bb4ac2"
+      },
+      "description": "Run a small sandboxed script over a big JSON response; only the answer enters context.",
+      "category": "core",
+      "homepage": "https://github.com/VinVirtual/vin-scriptlens",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
     },
     {
       "name": "reel-studio",
