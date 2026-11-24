@@ -1,0 +1,23 @@
+{
+  "name": "vin-ai-eval",
+  "displayName": "Vin AI Eval",
+  "version": "0.1.0",
+  "description": "Test chatbots and agents like software, benchmark a local voice assistant, replay agent sessions and lint skill repos. This bundle has no skills of its own: installing it installs its member plugins.",
+  "author": {
+    "name": "Lashvin Manimaran",
+    "url": "https://github.com/VinVirtual"
+  },
+  "homepage": "https://github.com/VinVirtual/vinskills",
+  "repository": "https://github.com/VinVirtual/vinskills",
+  "license": "MIT",
+  "keywords": [
+    "bundle",
+    "ai-eval"
+  ],
+  "dependencies": [
+    "eval-studio",
+    "voice-loop",
+    "trace-studio",
+    "skill-ci"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "vin-robotics",
+  "displayName": "Vin Robotics",
+  "version": "0.1.0",
+  "description": "Check, view, animate, simulate, replay and film robot models (URDF), make AR files and scan objects into 3D. This bundle has no skills of its own: installing it installs its member plugins.",
+  "author": {
+    "name": "Lashvin Manimaran",
+    "url": "https://github.com/VinVirtual"
+  },
+  "homepage": "https://github.com/VinVirtual/vinskills",
+  "repository": "https://github.com/VinVirtual/vinskills",
+  "license": "MIT",
+  "keywords": [
+    "bundle",
+    "robotics"
+  ],
+  "dependencies": [
+    "urdf-doctor",
+    "robot-viewer",
+    "retarget-studio",
+    "physics-studio",
+    "replay-studio",
+    "robot-reel",
+    "ar-models",
+    "scan-studio"
+  ]
+}

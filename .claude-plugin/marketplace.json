@@ -1,0 +1,414 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "vinskills",
+  "description": "Lashvin Manimaran's Claude Code skills: media, robotics and AI evaluation, plus the vin-core workflow plugin.",
+  "owner": {
+    "name": "Lashvin Manimaran",
+    "url": "https://github.com/VinVirtual"
+  },
+  "metadata": {
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "vin-core",
+      "source": "./plugins/vin-core",
+      "description": "House workflow and context tools: build and ship with agents, web QA, token and cost lens, symbol navigation, documents to Markdown, output squeezing, scripts over big JSON.",
+      "category": "workflow",
+      "tags": [
+        "workflow",
+        "agents",
+        "qa",
+        "context",
+        "cost"
+      ]
+    },
+    {
+      "name": "vin-media",
+      "source": "./plugins/vin-media",
+      "description": "Make videos, podcasts, dubs, voiced websites, talking avatars, courses, share cards and release notes on your own machine. Installs: reel-studio, podcast-studio, dub-studio, site-narrator, avatar-studio, talking-head, course-studio, share-cards, changelog-studio.",
+      "category": "bundle",
+      "tags": [
+        "bundle",
+        "media"
+      ]
+    },
+    {
+      "name": "vin-robotics",
+      "source": "./plugins/vin-robotics",
+      "description": "Check, view, animate, simulate, replay and film robot models (URDF), make AR files and scan objects into 3D. Installs: urdf-doctor, robot-viewer, retarget-studio, physics-studio, replay-studio, robot-reel, ar-models, scan-studio.",
+      "category": "bundle",
+      "tags": [
+        "bundle",
+        "robotics"
+      ]
+    },
+    {
+      "name": "vin-ai-eval",
+      "source": "./plugins/vin-ai-eval",
+      "description": "Test chatbots and agents like software, benchmark a local voice assistant, replay agent sessions and lint skill repos. Installs: eval-studio, voice-loop, trace-studio, skill-ci.",
+      "category": "bundle",
+      "tags": [
+        "bundle",
+        "ai-eval"
+      ]
+    },
+    {
+      "name": "reel-studio",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/reel-studio",
+        "ref": "main",
+        "sha": "3968fce2e868be5617a443c46a168a9ad3a4fd49"
+      },
+      "description": "Short voiced motion-graphics videos from a text script, made entirely on your own machine.",
+      "category": "media",
+      "homepage": "https://github.com/VinVirtual/reel-studio",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "podcast-studio",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/podcast-studio",
+        "ref": "main",
+        "sha": "fd4f2485283de0ed136fe1e193ce31863f437995"
+      },
+      "description": "Two-voice podcast episodes made on your own machine from an article or script: voices, mix, chapters, captions, show notes and an audiogram video.",
+      "category": "media",
+      "homepage": "https://github.com/VinVirtual/podcast-studio",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "dub-studio",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/dub-studio",
+        "ref": "main",
+        "sha": "7cb579cafa538c4bdc4e7b71c1a0e4f2b78722e5"
+      },
+      "description": "Translate and re-voice a video locally with synthetic voices, keeping the music, with bilingual subtitles.",
+      "category": "media",
+      "homepage": "https://github.com/VinVirtual/dub-studio",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "site-narrator",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/site-narrator",
+        "ref": "main",
+        "sha": "6aaf55d5bc6e480d6a9fa0523a78aab3fcbda66d"
+      },
+      "description": "Give any website a recorded voice with no paid service: record its text locally and play it in the browser.",
+      "category": "media",
+      "homepage": "https://github.com/VinVirtual/site-narrator",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "avatar-studio",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/avatar-studio",
+        "ref": "main",
+        "sha": "4fbabcec3537d4ef09a23b65b1dcec9dcdb36ae8"
+      },
+      "description": "Turn a drawn portrait and a script into a video of that character speaking it, made locally and labelled as computer-generated.",
+      "category": "media",
+      "homepage": "https://github.com/VinVirtual/avatar-studio",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "talking-head",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/talking-head",
+        "ref": "main",
+        "sha": "87c40ebc3aa53f646861f0930e6b66c36b46278d"
+      },
+      "description": "Turn one illustrated portrait into a 3D head for a web page that follows the pointer, blinks and talks.",
+      "category": "media",
+      "homepage": "https://github.com/VinVirtual/talking-head",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "course-studio",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/course-studio",
+        "ref": "main",
+        "sha": "9e8ac70a203d6630ab17cf7d78dd8a82d5304d7b"
+      },
+      "description": "Turn your documents into a static interactive course site: cited lessons read aloud, quizzes with proof, glossary, search and progress.",
+      "category": "media",
+      "homepage": "https://github.com/VinVirtual/course-studio",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "share-cards",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/share-cards",
+        "ref": "main",
+        "sha": "b2f71ea06fe2f29cdf2bbaa6b8bac9b1411b90d0"
+      },
+      "description": "Link-preview images and per-page share tags for every page of a website, from one HTML template.",
+      "category": "media",
+      "homepage": "https://github.com/VinVirtual/share-cards",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "changelog-studio",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/changelog-studio",
+        "ref": "main",
+        "sha": "44675669d135684f84a79fab7a6ad8b26405f6a1"
+      },
+      "description": "A git range becomes checked release notes, a CHANGELOG section, a 30-second release reel and a share card.",
+      "category": "media",
+      "homepage": "https://github.com/VinVirtual/changelog-studio",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "urdf-doctor",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/urdf-doctor",
+        "ref": "main",
+        "sha": "ecbd344f9c4fd00b3073150243edc02c3cc433d9"
+      },
+      "description": "Audit and repair URDF robot models, export MJCF, test them in MuJoCo, with a visual 3D report.",
+      "category": "robotics",
+      "homepage": "https://github.com/VinVirtual/urdf-doctor",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "robot-viewer",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/robot-viewer",
+        "ref": "main",
+        "sha": "dee0b123cfd97934d48edc732b8fac6133661adc"
+      },
+      "description": "Turn a URDF robot into one compressed GLB and an embeddable, CSP-safe <robot-viewer> web component.",
+      "category": "robotics",
+      "homepage": "https://github.com/VinVirtual/robot-viewer",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "retarget-studio",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/retarget-studio",
+        "ref": "main",
+        "sha": "30a58a48f67e1c2f84b38d4a899f4557582b86f7"
+      },
+      "description": "Retarget human motion capture (BVH) onto a URDF robot within its limits, with a side-by-side video.",
+      "category": "robotics",
+      "homepage": "https://github.com/VinVirtual/retarget-studio",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "physics-studio",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/physics-studio",
+        "ref": "main",
+        "sha": "e3ca86b3c39665d4bc4eba4f55b9ba8bdd75105c"
+      },
+      "description": "A robot plus a plain-language task becomes a narrated MuJoCo physics clip with force overlays and a run log.",
+      "category": "robotics",
+      "homepage": "https://github.com/VinVirtual/physics-studio",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "replay-studio",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/replay-studio",
+        "ref": "main",
+        "sha": "681f4f836f625cdf2b28d62f85eeecd29643b78b"
+      },
+      "description": "One robot recording (rosbag, MCAP, LeRobot, CSV) becomes a synced replay video and a scrubbable offline viewer.",
+      "category": "robotics",
+      "homepage": "https://github.com/VinVirtual/replay-studio",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "robot-reel",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/robot-reel",
+        "ref": "main",
+        "sha": "0cc6d82d77b80f608ba07aafdf6299c6b23aee91"
+      },
+      "description": "Turn a robot description (URDF) and a shot list into a voiced showcase video of the robot, made locally.",
+      "category": "robotics",
+      "homepage": "https://github.com/VinVirtual/robot-reel",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "ar-models",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/ar-models",
+        "ref": "main",
+        "sha": "e358a716c568eaccc431fc65401c53b2f823e20a"
+      },
+      "description": "Turn 3D models and robot files into AR files phones can place in the room: GLB for Android, USDZ for iPhone.",
+      "category": "robotics",
+      "homepage": "https://github.com/VinVirtual/ar-models",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "scan-studio",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/scan-studio",
+        "ref": "main",
+        "sha": "6e7aad23f6285812ee4448da5da2fe554450b5ab"
+      },
+      "description": "A phone video or photo set of an object becomes a 3D model (GLB, optional USDZ) and a report, CPU only. Objects only; captures with detected faces are refused.",
+      "category": "robotics",
+      "homepage": "https://github.com/VinVirtual/scan-studio",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "eval-studio",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/eval-studio",
+        "ref": "main",
+        "sha": "389f4e8c1ce8d4f09f9715306306e0469f984cb0"
+      },
+      "description": "Test chatbots, RAG systems and agents like software: run cases, score answers, compare with the last run, gate CI and read a report.",
+      "category": "ai-eval",
+      "homepage": "https://github.com/VinVirtual/eval-studio",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "voice-loop",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/voice-loop",
+        "ref": "main",
+        "sha": "2ed40e46588a9cfe3832813efaeada484801cb54"
+      },
+      "description": "Build and benchmark a local voice assistant (VAD, Whisper, any OpenAI-compatible LLM, Kokoro) with per-stage latency.",
+      "category": "ai-eval",
+      "homepage": "https://github.com/VinVirtual/voice-loop",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "trace-studio",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/trace-studio",
+        "ref": "main",
+        "sha": "1a2189be20b23fb04d9be9dc6b04e8a3a1193c5a"
+      },
+      "description": "Turn an AI agent session into an anonymised replay page and a short narrated summary video.",
+      "category": "ai-eval",
+      "homepage": "https://github.com/VinVirtual/trace-studio",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    },
+    {
+      "name": "skill-ci",
+      "source": {
+        "source": "github",
+        "repo": "VinVirtual/skill-ci",
+        "ref": "main",
+        "sha": "ba5b72f63c1b0a6061b7d088c784d2e409fd89c8"
+      },
+      "description": "GitHub Action and CLI that checks Claude Code skill repos: SKILL.md lint, secrets scan, script safety, media budget.",
+      "category": "ai-eval",
+      "homepage": "https://github.com/VinVirtual/skill-ci",
+      "license": "MIT",
+      "author": {
+        "name": "Lashvin Manimaran",
+        "url": "https://github.com/VinVirtual"
+      }
+    }
+  ]
+}

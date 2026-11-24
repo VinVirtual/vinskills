@@ -1,0 +1,14 @@
+{
+  "name": "vin-core",
+  "displayName": "Vin Core",
+  "version": "0.1.0",
+  "description": "House workflow and context tools: ship with agents, web QA, token and cost lens, symbol navigation, documents to Markdown, output squeezing and scripts over big JSON.",
+  "author": {
+    "name": "Lashvin Manimaran",
+    "url": "https://github.com/VinVirtual"
+  },
+  "homepage": "https://github.com/VinVirtual/vinskills",
+  "repository": "https://github.com/VinVirtual/vinskills",
+  "license": "MIT",
+  "keywords": ["workflow", "agents", "qa", "context", "cost", "markdown", "navigation"]
+}

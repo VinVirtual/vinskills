@@ -1,0 +1,220 @@
+{
+  "_note": "Source of truth for the marketplace. Edit this, then run: node scripts/build-marketplace.mjs (add --pin to move every sha to the current main).",
+  "owner": "VinVirtual",
+  "themes": {
+    "vin-media": {
+      "displayName": "Vin Media",
+      "description": "Make videos, podcasts, dubs, voiced websites, talking avatars, courses, share cards and release notes on your own machine."
+    },
+    "vin-robotics": {
+      "displayName": "Vin Robotics",
+      "description": "Check, view, animate, simulate, replay and film robot models (URDF), make AR files and scan objects into 3D."
+    },
+    "vin-ai-eval": {
+      "displayName": "Vin AI Eval",
+      "description": "Test chatbots and agents like software, benchmark a local voice assistant, replay agent sessions and lint skill repos."
+    }
+  },
+  "skills": [
+    {
+      "name": "reel-studio",
+      "theme": "vin-media",
+      "repo": "VinVirtual/reel-studio",
+      "ref": "main",
+      "sha": "3968fce2e868be5617a443c46a168a9ad3a4fd49",
+      "description": "Short voiced motion-graphics videos from a text script, made entirely on your own machine."
+    },
+    {
+      "name": "podcast-studio",
+      "theme": "vin-media",
+      "repo": "VinVirtual/podcast-studio",
+      "ref": "main",
+      "sha": "fd4f2485283de0ed136fe1e193ce31863f437995",
+      "description": "Two-voice podcast episodes made on your own machine from an article or script: voices, mix, chapters, captions, show notes and an audiogram video."
+    },
+    {
+      "name": "dub-studio",
+      "theme": "vin-media",
+      "repo": "VinVirtual/dub-studio",
+      "ref": "main",
+      "sha": "7cb579cafa538c4bdc4e7b71c1a0e4f2b78722e5",
+      "description": "Translate and re-voice a video locally with synthetic voices, keeping the music, with bilingual subtitles."
+    },
+    {
+      "name": "site-narrator",
+      "theme": "vin-media",
+      "repo": "VinVirtual/site-narrator",
+      "ref": "main",
+      "sha": "6aaf55d5bc6e480d6a9fa0523a78aab3fcbda66d",
+      "description": "Give any website a recorded voice with no paid service: record its text locally and play it in the browser."
+    },
+    {
+      "name": "avatar-studio",
+      "theme": "vin-media",
+      "repo": "VinVirtual/avatar-studio",
+      "ref": "main",
+      "sha": "4fbabcec3537d4ef09a23b65b1dcec9dcdb36ae8",
+      "description": "Turn a drawn portrait and a script into a video of that character speaking it, made locally and labelled as computer-generated."
+    },
+    {
+      "name": "talking-head",
+      "theme": "vin-media",
+      "repo": "VinVirtual/talking-head",
+      "ref": "main",
+      "sha": "87c40ebc3aa53f646861f0930e6b66c36b46278d",
+      "description": "Turn one illustrated portrait into a 3D head for a web page that follows the pointer, blinks and talks."
+    },
+    {
+      "name": "course-studio",
+      "theme": "vin-media",
+      "repo": "VinVirtual/course-studio",
+      "ref": "main",
+      "sha": "9e8ac70a203d6630ab17cf7d78dd8a82d5304d7b",
+      "description": "Turn your documents into a static interactive course site: cited lessons read aloud, quizzes with proof, glossary, search and progress."
+    },
+    {
+      "name": "share-cards",
+      "theme": "vin-media",
+      "repo": "VinVirtual/share-cards",
+      "ref": "main",
+      "sha": "b2f71ea06fe2f29cdf2bbaa6b8bac9b1411b90d0",
+      "description": "Link-preview images and per-page share tags for every page of a website, from one HTML template."
+    },
+    {
+      "name": "changelog-studio",
+      "theme": "vin-media",
+      "repo": "VinVirtual/changelog-studio",
+      "ref": "main",
+      "sha": "44675669d135684f84a79fab7a6ad8b26405f6a1",
+      "description": "A git range becomes checked release notes, a CHANGELOG section, a 30-second release reel and a share card."
+    },
+    {
+      "name": "urdf-doctor",
+      "theme": "vin-robotics",
+      "repo": "VinVirtual/urdf-doctor",
+      "ref": "main",
+      "sha": "ecbd344f9c4fd00b3073150243edc02c3cc433d9",
+      "description": "Audit and repair URDF robot models, export MJCF, test them in MuJoCo, with a visual 3D report."
+    },
+    {
+      "name": "robot-viewer",
+      "theme": "vin-robotics",
+      "repo": "VinVirtual/robot-viewer",
+      "ref": "main",
+      "sha": "dee0b123cfd97934d48edc732b8fac6133661adc",
+      "description": "Turn a URDF robot into one compressed GLB and an embeddable, CSP-safe <robot-viewer> web component."
+    },
+    {
+      "name": "retarget-studio",
+      "theme": "vin-robotics",
+      "repo": "VinVirtual/retarget-studio",
+      "ref": "main",
+      "sha": "30a58a48f67e1c2f84b38d4a899f4557582b86f7",
+      "description": "Retarget human motion capture (BVH) onto a URDF robot within its limits, with a side-by-side video."
+    },
+    {
+      "name": "physics-studio",
+      "theme": "vin-robotics",
+      "repo": "VinVirtual/physics-studio",
+      "ref": "main",
+      "sha": "e3ca86b3c39665d4bc4eba4f55b9ba8bdd75105c",
+      "description": "A robot plus a plain-language task becomes a narrated MuJoCo physics clip with force overlays and a run log."
+    },
+    {
+      "name": "replay-studio",
+      "theme": "vin-robotics",
+      "repo": "VinVirtual/replay-studio",
+      "ref": "main",
+      "sha": "681f4f836f625cdf2b28d62f85eeecd29643b78b",
+      "description": "One robot recording (rosbag, MCAP, LeRobot, CSV) becomes a synced replay video and a scrubbable offline viewer."
+    },
+    {
+      "name": "robot-reel",
+      "theme": "vin-robotics",
+      "repo": "VinVirtual/robot-reel",
+      "ref": "main",
+      "sha": "0cc6d82d77b80f608ba07aafdf6299c6b23aee91",
+      "description": "Turn a robot description (URDF) and a shot list into a voiced showcase video of the robot, made locally."
+    },
+    {
+      "name": "ar-models",
+      "theme": "vin-robotics",
+      "repo": "VinVirtual/ar-models",
+      "ref": "main",
+      "sha": "e358a716c568eaccc431fc65401c53b2f823e20a",
+      "description": "Turn 3D models and robot files into AR files phones can place in the room: GLB for Android, USDZ for iPhone."
+    },
+    {
+      "name": "scan-studio",
+      "theme": "vin-robotics",
+      "repo": "VinVirtual/scan-studio",
+      "ref": "main",
+      "sha": "6e7aad23f6285812ee4448da5da2fe554450b5ab",
+      "description": "A phone video or photo set of an object becomes a 3D model (GLB, optional USDZ) and a report, CPU only. Objects only; captures with detected faces are refused."
+    },
+    {
+      "name": "eval-studio",
+      "theme": "vin-ai-eval",
+      "repo": "VinVirtual/eval-studio",
+      "ref": "main",
+      "sha": "389f4e8c1ce8d4f09f9715306306e0469f984cb0",
+      "description": "Test chatbots, RAG systems and agents like software: run cases, score answers, compare with the last run, gate CI and read a report."
+    },
+    {
+      "name": "voice-loop",
+      "theme": "vin-ai-eval",
+      "repo": "VinVirtual/voice-loop",
+      "ref": "main",
+      "sha": "2ed40e46588a9cfe3832813efaeada484801cb54",
+      "description": "Build and benchmark a local voice assistant (VAD, Whisper, any OpenAI-compatible LLM, Kokoro) with per-stage latency."
+    },
+    {
+      "name": "trace-studio",
+      "theme": "vin-ai-eval",
+      "repo": "VinVirtual/trace-studio",
+      "ref": "main",
+      "sha": "1a2189be20b23fb04d9be9dc6b04e8a3a1193c5a",
+      "description": "Turn an AI agent session into an anonymised replay page and a short narrated summary video."
+    },
+    {
+      "name": "skill-ci",
+      "theme": "vin-ai-eval",
+      "repo": "VinVirtual/skill-ci",
+      "ref": "main",
+      "sha": "ba5b72f63c1b0a6061b7d088c784d2e409fd89c8",
+      "description": "GitHub Action and CLI that checks Claude Code skill repos: SKILL.md lint, secrets scan, script safety, media budget."
+    }
+  ],
+  "projects": [
+    {
+      "name": "dual-memory",
+      "repo": "VinVirtual/dual-memory",
+      "description": "Agent memory library: short-term buffer plus long-term SQLite/FTS5 + embeddings with fact superseding, and an honest benchmark."
+    },
+    {
+      "name": "malay-eval",
+      "repo": "VinVirtual/malay-eval",
+      "description": "Draft evaluation set for LLMs in Bahasa Malaysia and Manglish: comprehension, translation, code-switching, register, local facts, safety and false friends. Run with eval-studio. Cases await native-speaker review."
+    },
+    {
+      "name": "teleop-playground",
+      "repo": "VinVirtual/teleop-playground",
+      "description": "Teleoperate a simulated SO-ARM100 arm in the browser with keys, touch, webcam hand tracking or phone tilt, and record demonstrations. Camera frames never leave the device."
+    },
+    {
+      "name": "open-robot-zoo",
+      "repo": "VinVirtual/open-robot-zoo",
+      "description": "A gallery of openly licensed robot models with 3D viewers, specs, licences, health checks, clips and AR files, built from pinned sources."
+    },
+    {
+      "name": "physical-ai-radar",
+      "repo": "VinVirtual/physical-ai-radar",
+      "description": "A weekly, automatically built digest of open robotics and physical-AI releases: models, datasets, tools and papers, with transparent scoring and feeds."
+    },
+    {
+      "name": "policy-from-scratch",
+      "repo": "VinVirtual/policy-from-scratch",
+      "description": "Imitation-learning robot policies from scratch on CPU (BC, ACT-lite, tiny diffusion) on a MuJoCo push task, with honest paired statistics, ablations and videos. Simulation only."
+    }
+  ]
+}

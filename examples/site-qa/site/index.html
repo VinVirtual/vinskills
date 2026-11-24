@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harbour Lamp Co. — demo page with deliberate mistakes</title>
+<style>
+  :root { color-scheme: light dark; --bg: #f6f1e7; --ink: #1d1b16; --accent: #b5462a; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #17150f; --ink: #efe7d6; --accent: #e0774f; } }
+  body { margin: 0; font: 18px/1.5 Georgia, serif; background: var(--bg); color: var(--ink); }
+  header { padding: 48px 24px; border-bottom: 3px solid var(--accent); }
+  h1 { font-size: clamp(2rem, 6vw, 4.5rem); margin: 0; letter-spacing: -0.02em; }
+  .spin { display: inline-block; width: 18px; height: 18px; border-radius: 50%; border: 3px solid var(--accent); border-top-color: transparent; animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .wide { width: 520px; background: var(--accent); color: var(--bg); padding: 8px; }
+  main { padding: 24px; max-width: 70ch; }
+  a.icon { display: inline-block; width: 16px; height: 16px; background: var(--accent); }
+</style>
+</head>
+<body>
+<header><h1>Harbour Lamp Co.</h1><p>A fictional shop page used to show what vin-site-qa catches. <span class="spin"></span></p></header>
+<main>
+  <h3>Skipped a heading level</h3>
+  <p>This page has a few mistakes on purpose: an image with no alt text, an icon link with no name, a form field with no label, a box that is too wide for a phone, a looping animation that ignores reduced motion, and a script error.</p>
+  <img src="lamp.svg">
+  <a class="icon" href="#cart"></a>
+  <p><input type="email" placeholder="email"></p>
+  <div class="wide">This box is 520px wide and makes phones scroll sideways.</div>
+  <p>Lamps are made from reclaimed brass. Every lamp ships with a cloth cord and a warm bulb. Orders over a set amount ship free inside the country.</p>
+</main>
+<script>document.querySelector('#missing').textContent = 'oops'</script>
+</body>
+</html>

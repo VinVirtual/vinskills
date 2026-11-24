@@ -1,0 +1,162 @@
+#!/usr/bin/env node
+// Generate .claude-plugin/marketplace.json, the theme plugin manifests and the README skill
+// table from catalog.json. Run after editing catalog.json.
+//   node scripts/build-marketplace.mjs           write files
+//   node scripts/build-marketplace.mjs --check   exit 1 if any generated file is out of date
+//   node scripts/build-marketplace.mjs --pin     move every sha to the repo's current main (needs gh)
+import fs from 'node:fs'
+import path from 'node:path'
+import { spawnSync } from 'node:child_process'
+import { fileURLToPath } from 'node:url'
+
+export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+export const MARKETPLACE_NAME = 'vinskills'
+const AUTHOR = { name: 'Lashvin Manimaran', url: 'https://github.com/VinVirtual' }
+const VERSION = '0.1.0'
+
+export function loadCatalog (root = ROOT) {
+  return JSON.parse(fs.readFileSync(path.join(root, 'catalog.json'), 'utf8'))
+}
+
+export function validateCatalog (cat) {
+  const errors = []
+  const names = new Set()
+  for (const s of cat.skills || []) {
+    if (!/^[a-z0-9][a-z0-9-]*$/.test(s.name)) errors.push(`bad name ${s.name}`)
+    if (names.has(s.name)) errors.push(`duplicate ${s.name}`)
+    names.add(s.name)
+    if (!cat.themes[s.theme]) errors.push(`${s.name}: unknown theme ${s.theme}`)
+    if (!/^[A-Za-z0-9-]+\/[A-Za-z0-9._-]+$/.test(s.repo)) errors.push(`${s.name}: repo must be owner/name`)
+    if (!/^[0-9a-f]{40}$/.test(s.sha || '')) errors.push(`${s.name}: sha must be a full 40-character commit`)
+    if (!s.description || s.description.length > 300) errors.push(`${s.name}: description missing or too long`)
+  }
+  for (const t of Object.keys(cat.themes)) if (names.has(t)) errors.push(`theme ${t} clashes with a skill name`)
+  if (names.has('vin-core')) errors.push('vin-core is reserved for the plugin built here')
+  return errors
+}
+
+export function buildMarketplace (cat) {
+  const plugins = [{
+    name: 'vin-core',
+    source: './plugins/vin-core',
+    description: 'House workflow and context tools: build and ship with agents, web QA, token and cost lens, symbol navigation, documents to Markdown, output squeezing, scripts over big JSON.',
+    category: 'workflow',
+    tags: ['workflow', 'agents', 'qa', 'context', 'cost']
+  }]
+  for (const [theme, t] of Object.entries(cat.themes)) {
+    plugins.push({
+      name: theme,
+      source: `./plugins/${theme}`,
+      description: `${t.description} Installs: ${cat.skills.filter(s => s.theme === theme).map(s => s.name).join(', ')}.`,
+      category: 'bundle',
+      tags: ['bundle', theme.replace(/^vin-/, '')]
+    })
+  }
+  for (const s of cat.skills) {
+    plugins.push({
+      name: s.name,
+      source: { source: 'github', repo: s.repo, ref: s.ref || 'main', sha: s.sha },
+      description: s.description,
+      category: s.theme.replace(/^vin-/, ''),
+      homepage: `https://github.com/${s.repo}`,
+      license: 'MIT',
+      author: AUTHOR
+    })
+  }
+  return {
+    $schema: 'https://anthropic.com/claude-code/marketplace.schema.json',
+    name: MARKETPLACE_NAME,
+    description: "Lashvin Manimaran's Claude Code skills: media, robotics and AI evaluation, plus the vin-core workflow plugin.",
+    owner: AUTHOR,
+    metadata: { version: VERSION },
+    plugins
+  }
+}
+
+export function buildThemeManifest (cat, theme) {
+  const t = cat.themes[theme]
+  return {
+    name: theme,
+    displayName: t.displayName,
+    version: VERSION,
+    description: `${t.description} This bundle has no skills of its own: installing it installs its member plugins.`,
+    author: AUTHOR,
+    homepage: 'https://github.com/VinVirtual/vinskills',
+    repository: 'https://github.com/VinVirtual/vinskills',
+    license: 'MIT',
+    keywords: ['bundle', theme.replace(/^vin-/, '')],
+    dependencies: cat.skills.filter(s => s.theme === theme).map(s => s.name)
+  }
+}
+
+const VIN_CORE_SKILLS = [
+  ['vin-house-build', 'The house flow from brief to release with agents, the agent rules, a privacy scan and a fresh-clone test.'],
+  ['vin-agent-orchestration', 'Brief subagents well, run them in parallel in one repo without collisions, get comparable reports.'],
+  ['vin-site-qa', 'Ship-check a page: screenshots at 390/1024/1440 in both themes and WebKit iPhone, console, CSP, prerender/SEO, quick a11y, LCP/CLS/JS.'],
+  ['vin-burn', 'Token and cost lens over local Claude Code transcripts, by day, project, model, tool and task category.'],
+  ['vin-navigator', 'Symbol index for JS/TS/Python/Go/Swift: find, show, refs, outline, so edits target one symbol.'],
+  ['vin-docs', 'PDF, DOCX, XLSX, PPTX and HTML to clean Markdown on this machine, with tables and page markers.'],
+  ['vin-squeeze', 'Shrink long logs, command output and JSON before they enter context, keeping every error line.'],
+  ['vin-scriptlens', 'Run a small sandboxed script over a big JSON response; only the answer enters context.']
+]
+
+export function buildReadmeTable (cat) {
+  const lines = ['| Plugin | Skill | What it does |', '| --- | --- | --- |']
+  for (const [name, what] of VIN_CORE_SKILLS) lines.push(`| vin-core | [${name}](plugins/vin-core/skills/${name}/SKILL.md) | ${what} |`)
+  for (const theme of Object.keys(cat.themes)) {
+    for (const s of cat.skills.filter(x => x.theme === theme)) lines.push(`| ${theme} | [${s.name}](https://github.com/${s.repo}) | ${s.description.replace(/\|/g, '\\|')} |`)
+  }
+  lines.push('', 'Projects that are not skills (no plugin to install; clone them directly):', '')
+  for (const p of cat.projects || []) lines.push(`- [${p.name}](https://github.com/${p.repo}): ${p.description}`)
+  return lines.join('\n')
+}
+
+const BEGIN = '<!-- skills-table:begin (generated by scripts/build-marketplace.mjs) -->'
+const END = '<!-- skills-table:end -->'
+
+export function spliceReadme (readme, table) {
+  const a = readme.indexOf(BEGIN)
+  const b = readme.indexOf(END)
+  if (a < 0 || b < a) throw new Error('README.md is missing the skills-table markers')
+  return readme.slice(0, a + BEGIN.length) + '\n' + table + '\n' + readme.slice(b)
+}
+
+export function outputs (cat, root = ROOT) {
+  const files = { '.claude-plugin/marketplace.json': JSON.stringify(buildMarketplace(cat), null, 2) + '\n' }
+  for (const theme of Object.keys(cat.themes)) files[`plugins/${theme}/.claude-plugin/plugin.json`] = JSON.stringify(buildThemeManifest(cat, theme), null, 2) + '\n'
+  const readmePath = path.join(root, 'README.md')
+  if (fs.existsSync(readmePath)) files['README.md'] = spliceReadme(fs.readFileSync(readmePath, 'utf8'), buildReadmeTable(cat))
+  return files
+}
+
+function pin (cat) {
+  for (const s of cat.skills) {
+    const r = spawnSync('gh', ['api', `repos/${s.repo}/commits/${s.ref || 'main'}`, '--jq', '.sha'], { encoding: 'utf8' })
+    if (r.status !== 0) throw new Error(`could not read ${s.repo}: ${r.stderr.trim()}`)
+    s.sha = r.stdout.trim()
+  }
+  fs.writeFileSync(path.join(ROOT, 'catalog.json'), JSON.stringify(cat, null, 2) + '\n')
+}
+
+function main () {
+  const args = process.argv.slice(2)
+  const cat = loadCatalog()
+  if (args.includes('--pin')) pin(cat)
+  const errs = validateCatalog(cat)
+  if (errs.length) { console.error('catalog.json:\n  ' + errs.join('\n  ')); process.exit(1) }
+  const files = outputs(cat)
+  let stale = 0
+  for (const [rel, text] of Object.entries(files)) {
+    const abs = path.join(ROOT, rel)
+    const cur = fs.existsSync(abs) ? fs.readFileSync(abs, 'utf8') : null
+    if (cur === text) continue
+    if (args.includes('--check')) { console.error(`out of date: ${rel}`); stale++ } else {
+      fs.mkdirSync(path.dirname(abs), { recursive: true })
+      fs.writeFileSync(abs, text)
+      console.log(`wrote ${rel}`)
+    }
+  }
+  if (stale) { console.error('run: node scripts/build-marketplace.mjs'); process.exit(1) }
+}
+
+if (process.argv[1] && process.argv[1].endsWith('build-marketplace.mjs')) main()
