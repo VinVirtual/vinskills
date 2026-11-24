@@ -9,9 +9,16 @@ import { parseFrontmatter } from '../scripts/validate.mjs'
 
 const online = process.env.VINSKILLS_ONLINE === '1'
 const headers = { accept: 'application/vnd.github+json', 'user-agent': 'vinskills-source-check', ...(process.env.GH_TOKEN ? { authorization: `Bearer ${process.env.GH_TOKEN}` } : {}) }
-const api = async (p) => {
-  const r = await fetch('https://api.github.com/' + p, { headers })
-  return { status: r.status, body: r.status === 200 ? await r.json() : null }
+// One retry on a network error or a 5xx, so a passing hiccup does not fail the run.
+const api = async (p, tries = 2) => {
+  try {
+    const r = await fetch('https://api.github.com/' + p, { headers, signal: AbortSignal.timeout(10000) })
+    if (r.status >= 500 && tries > 1) return api(p, tries - 1)
+    return { status: r.status, body: r.status === 200 ? await r.json() : null }
+  } catch (e) {
+    if (tries > 1) return api(p, tries - 1)
+    throw e
+  }
 }
 
 const cat = loadCatalog()
